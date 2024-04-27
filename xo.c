@@ -43,6 +43,25 @@ void jeu(){
      }
      }
     }
+void jeu2(){
+    int i,j;
+    printf("\nChoisissez une case libre\n");
+    while (1)
+    {
+        printf("Colonne : ");
+        scanf("%d",&j);
+        printf("Ligne : ");
+        scanf("%d",&i);
+
+        if (X[i-1][j-1] == 'O' || X[i-1][j-1] == 'X' || i<0 || i>3 || j<0 || j>3)
+     {
+        printf("Impossible de cocher cette case.\n");
+     } else {
+        X[i-1][j-1] = 'O';
+        break;
+     }
+     }
+    }
 int ia1(){
     srand(time(NULL));
     int iRandom, jRandom;
@@ -108,13 +127,26 @@ int tour(){
                     }
             return 0;
 }
+int tour2(){
+    if (findejeu()) {
+                        if (gagnant() == 1) {
+                            printf("Joueur 1 a gagne !! :D\n");
+                        } else if (gagnant() == -1) {
+                            printf("Joueur 2 a gagne !! :D\n");
+                        } else {
+                            printf("Match nul.\n");
+                        }
+                        return 1;
+                    }
+            return 0;
+}
 
 int main() {
     int fin = 1;
     int dif;
     
     while (fin) {
-        printf("\nChoisissez votre difficulte : \n\nFacile = 1\nNormal = 2\nDifficile = 3\n");
+        printf("\nChoisissez votre difficulte : \n\nFacile = 1\nNormal = 2\nDifficile = 3\nMulti = 4\n");
         scanf("%d", &dif);
         
         switch (dif) {
@@ -137,6 +169,19 @@ int main() {
                 printf("\n\n\tDebut de la partie : \n\n");
                 // a faire
                 break;
+            case 4:
+                printf("\n\n\t\tDebut de la partie : \n\n");
+                while (!findejeu()) {
+                    table();
+                    jeu();
+                    if (tour2()){fin--;break;}
+                    table();
+                    jeu2();
+                    if (tour2()){fin--;break;}
+                    
+                }
+                break;
+                
             default:
                 printf("Choisissez une difficultee valide\n");
                 break;
